@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="https://unpkg.com/konva@8.2.3/konva.min.js"></script>
+    <style>
+        body {
+            background-color: lightgreen;
+        }
+        .button {
+            position: absolute;
+            top: calc(40% - 6cm);
+            left: calc(50% + 5mm);
+            transform: translate(-50%, -50%);
+            padding: 10px 20px;
+            font-size: 20px;
+            text-align: center;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            background: linear-gradient(to bottom, #ff0000 0%, #ffffff 100%);
+            box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.5);
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div id="container"></div>
+    <button class="button" onclick="startAnimation()">Lancer le tirage</button>
+    <script>
+        var width = window.innerWidth;
+        var height = window.innerHeight;
+
+        var stage = new Konva.Stage({
+            container: 'container',
+            width: width,
+            height: height,
+        });
+
+        var layer = new Konva.Layer();
+        stage.add(layer);
+
+        var wheel = new Konva.Group({
+            x: stage.width() / 2,
+            y: stage.height() / 2,
+        });
+        layer.add(wheel);
+
+        var names = ['Maman', 'Papa', 'Yves', 'Bertille', 'Louis', 'Odon', 'Clémence', 'Isaure', 'Benoit', 'Eudes', 'Come', 'Bathilde', 'Hermine', 'Joseph'];
+
+        for (var n = 0; n < 14; n++) {
+            var angle = (2 * Math.PI) / 14;
+            var wedge = new Konva.Wedge({
+                radius: 200,
+                fill: n % 2 === 0 ? 'lightcoral' : 'lightblue',
+                angle: angle * (180 / Math.PI),
+                rotation: (270 + (n * angle * (180 / Math.PI))) % 360,
+            });
+            wheel.add(wedge);
+
+            var text = new Konva.Text({
+                text: names[n],
+                fontSize: 20,
+                align: 'center',
+                verticalAlign: 'middle',
+                fill: 'white',
+                rotation: (270 + (n * angle * (180 / Math.PI))) % 360,
+                offsetX: -100,
+                offsetY: -10,
+            });
+            wheel.add(text);
+        }
+
+        var center = new Konva.Circle({
+            radius: 50,
+            fill: 'green',
+            listening: true,
+        });
+        wheel.add(center);
+
+        var pointer = new Konva.Line({
+            points: [stage.width() / 2, stage.height() / 2 - 210, stage.width() / 2 + 20, stage.height() / 2 - 230, stage.width() / 2 - 20, stage.height() / 2 - 230],
+            fill: 'gold',
+            closed : true,
+        });
+        layer.add(pointer);
+
+        var anim;
+        function startAnimation() {
+            var start = Date.now();
+            anim = new Konva.Animation(function (frame) {
+                var time = (Date.now() - start) / 1000;
+                var angleDiff;
+                if (time < 5) {
+                    angleDiff = frame.timeDiff * 2;
+                } else if (time < 7) {
+                    angleDiff = frame.timeDiff * (2 - (time - 5) / 2);
+                } else {
+                    anim.stop();
+                }
+                wheel.rotate(angleDiff);
+            }, layer);
+            anim.start();
+        }
+    </script>
+</body>
+</html>
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="https://unpkg.com/konva@8.2.3/konva.min.js"></script>
+    <style>
+        /* ... */
+    </style>
+</head>
+<style>
+    .button {
+        /* ... */
+        top: calc(40% - 6cm + 0.5cm);
+        /* ... */
+    }
+</style>
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="https://unpkg.com/konva@8.2.3/konva.min.js"></script>
+    <style>
+        /* ... */
+    </style>
+</head>
+<body>
+    <div id="container"></div>
+    <button class="button" onclick="startAnimation()">Lancer le tirage</button>
+    <script>
+        /* ... */
+
+        var anim;
+        function startAnimation() {
+            var start = Date.now();
+            anim = new Konva.Animation(function (frame) {
+                var time = (Date.now() - start) / 1000;
+                var angleDiff;
+                if (time < 5) {
+                    angleDiff = frame.timeDiff * 2;
+                } else if (time < 7) {
+                    angleDiff = frame.timeDiff * (2 - (time - 5) / 2);
+                } else {
+                    anim.stop();
+                    return;
+                }
+                wheel.rotate(angleDiff);
+            }, layer);
+            anim.start();
+        }
+    </script>
+</body>
+</html>
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="https://unpkg.com/konva@8.2.3/konva.min.js"></script>
+    <style>
+        /* ... */
+    </style>
+</head>
+<body>
+    <div id="container"></div>
+    <button class="button" onclick="startAnimation()">Lancer le tirage</button>
+    <script>
+        /* ... */
+
+        var anim;
+        function startAnimation() {
+            var start = Date.now();
+            var randomFactor = Math.random() * 2 + 1; // Ajoute un facteur aléatoire entre 1 et 3
+            anim = new Konva.Animation(function (frame) {
+                var time = (Date.now() - start) / 1000;
+                var angleDiff;
+                if (time < 5) {
+                    angleDiff = frame.timeDiff * randomFactor; // Utilise le facteur aléatoire ici
+                } else if (time < 7) {
+                    angleDiff = frame.timeDiff * (randomFactor - (time - 5) / 2);
+                } else {
+                    anim.stop();
+                    return;
+                }
+                wheel.rotate(angleDiff);
+            }, layer);
+            anim.start();
+        }
+    </script>
+</body>
+</html>
